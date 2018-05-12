@@ -1,5 +1,6 @@
 $lt-gray: #ddd;
 $background-dark: #002633;
+$background-lessdark: #24464e;
 $background-light: #0B4C5F;
 $background-pale: #A9E2F3;
 
@@ -18,4 +19,8 @@ $background-pale: #A9E2F3;
 .mat-toolbar{
     background-color: $background-dark;
     color:floralwhite;
+}
+
+.active {
+    background: $background-lessdark;
 }
