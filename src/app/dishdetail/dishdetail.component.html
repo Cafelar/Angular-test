@@ -26,6 +26,9 @@
           </mat-card-actions>
         </mat-card>
       </div>
+      <div [hidden]="dish">
+        <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
+      </div>
   </div>
 
   <div fxFlex="40">
@@ -36,6 +39,9 @@
         <p mat-line><span> {{comment.rating}} Stars </span></p>
         <p mat-line><span> -- {{comment.author}} {{ comment.date | date : "MMM d, yyyy"}}</span></p>
       </mat-list-item>
-    </mat-list> 
+    </mat-list>
+    <div [hidden]="dish">
+      <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
+    </div>
   </div> 
 </div>
