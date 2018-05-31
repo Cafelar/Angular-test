@@ -27,6 +27,8 @@ export class DishdetailComponent implements OnInit {
 
   errMess: string;
 
+  dishcopy = null;
+
   formErrors = {
     'name': '',
     'comment': ''
@@ -57,8 +59,9 @@ export class DishdetailComponent implements OnInit {
     this.dishservice.getDishIds().subscribe(dishIds => this.dishIds = dishIds,
       errmess => this.errMess = <any>errmess);
     this.route.params
-      .switchMap((params: Params) => this.dishservice.getDish(+params['id']))
-      .subscribe(dish => { this.dish = dish; this.setPrevNext(dish.id); });
+      .switchMap((params: Params) => { return this.dishservice.getDish(+params['id']); })
+      .subscribe(dish => { this.dish = dish; this.dishcopy = dish; this.setPrevNext(dish.id); },
+          errmess => { this.dish = null; this.errMess = <any>errmess; });
   }
 
   setPrevNext(dishId: number) {
@@ -101,10 +104,13 @@ export class DishdetailComponent implements OnInit {
   }
 
   onSubmit() {
-    this.dish.comments.push({rating: this.feedbackForm.value.rating, 
-      comment: this.feedbackForm.value.comment, 
-      author: this.feedbackForm.value.name, 
-      date: new Date().toDateString()});
+   this.dishcopy.comments.push({rating: this.feedbackForm.value.rating, 
+    comment: this.feedbackForm.value.comment, 
+    author: this.feedbackForm.value.name, 
+    date: new Date().toDateString()});
+    
+   this.dishcopy.save()
+     .subscribe(dish => { this.dish = dish; console.log(this.dish); });
 
     this.feedback = this.feedbackForm.value;
     console.log(this.feedback);
