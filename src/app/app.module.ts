@@ -21,6 +21,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { RestangularModule, Restangular } from 'ngx-restangular';
 
 import 'hammerjs';
 import { AppComponent } from './app.component';
@@ -41,6 +42,7 @@ import { AppRoutingModule } from './app-routing/app-routing.module';
 import { LoginComponent } from './login/login.component';
 
 import { baseURL } from './shared/baseurl';
+import { RestangularConfigFactory } from './shared/restConfig';
 
 @NgModule({
   declarations: [
@@ -77,7 +79,8 @@ import { baseURL } from './shared/baseurl';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpModule
+    HttpModule,
+    RestangularModule.forRoot(RestangularConfigFactory)
   ],
   providers: [DishService, 
     PromotionService,
