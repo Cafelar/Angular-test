@@ -34,14 +34,43 @@
       </div>
   </div>
 
-  <div fxFlex="40">
+  <div fxFlex=40>
     <mat-list fxFlex  *ngIf="dish">
-        <h3>Comments</h3>
-      <mat-list-item *ngFor="let comment of dish.comments">
-        <p mat-line><span> {{comment.comment}} </span></p>
-        <p mat-line><span> {{comment.rating}} Stars </span></p>
-        <p mat-line><span> -- {{comment.author}} {{ comment.date | date : "MMM d, yyyy"}}</span></p>
-      </mat-list-item>
+      <h3>Comments</h3>
+      <div>
+        <mat-list-item *ngFor="let comment of dish.comments">
+          <p mat-line><span> {{comment.comment}} </span></p>
+          <p mat-line><span> {{comment.rating}} Stars </span></p>
+          <p mat-line><span> -- {{comment.author}} {{ comment.date | date : "MMM d, yyyy"}}</span></p>
+        </mat-list-item>
+        <form novalidate [formGroup]="feedbackForm" (ngSubmit)="onSubmit()">
+            <p mat-line><span [hidden]="!(feedbackForm.value.comment) || (formErrors.comment)"> {{ feedbackForm.value.comment }}</span></p>
+            <p mat-line><span [hidden]="(!(feedbackForm.value.name) || (formErrors.name)) && (!(feedbackForm.value.comment) || (formErrors.comment))"> {{ feedbackForm.value.rating }} Stars</span></p>
+            <p mat-line><span [hidden]="!(feedbackForm.value.name) || (formErrors.name)">-- {{ feedbackForm.value.name }}</span></p>
+            <br>
+          <p>
+            <mat-form-field class="full-width" color="{{(formErrors.name) ? 'warn' : 'primary'}}">
+              <input matInput formControlName="name" placeholder="Name" type="text" required>
+              <mat-hint>
+                <span [hidden]="!(formErrors.name)">{{formErrors.name}}</span>
+              </mat-hint>
+            </mat-form-field>
+          </p>
+          <p>
+            <mat-slider thumbLabel tickInterval="1" min="1" max="5" step="1" value="5" 
+              formControlName="rating" placeholder="Your Rating"></mat-slider>
+          </p>
+          <p>
+            <mat-form-field class="full-width" color="{{(formErrors.comment) ? 'warn' : 'primary'}}">
+              <textarea matInput formControlName="comment" placeholder="Your Comment" type="textarea" style="height: 130px;" required></textarea>
+              <mat-hint>
+                <span [hidden]="!(formErrors.comment)">{{formErrors.comment}}</span>
+              </mat-hint>
+            </mat-form-field>
+          </p>
+          <p><button type="submit" mat-button class="background-primary text-floral-white" [disabled]="feedbackForm.invalid">Submit</button></p>
+        </form>
+      </div>
     </mat-list>
     <div [hidden]="dish">
       <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
