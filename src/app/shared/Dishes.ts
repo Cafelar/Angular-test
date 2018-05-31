@@ -1,5 +1,5 @@
 import { Dish } from './dish';
-
+/*
 export const DISHES: Dish[] = [
     {
         id: 0,
@@ -170,3 +170,4 @@ export const DISHES: Dish[] = [
         ]
     }
 ];
+*/
